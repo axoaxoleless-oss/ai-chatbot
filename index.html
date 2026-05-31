@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 20 20" fill="none">
+          <polygon points="10,2 18,7 18,13 10,18 2,13 2,7" stroke="currentColor" stroke-width="1.3" fill="none"/>
+          <polygon points="10,5 15,8 15,12 10,15 5,12 5,8" fill="currentColor" opacity=".2"/>
+          <circle cx="10" cy="10" r="2" fill="currentColor"/>
+        </svg>
+      </div>
+      <span class="brand-name">Axon</span>
+      <span class="brand-tag">AI</span>
+    </div>
+    <button class="new-chat-btn" id="new-chat-btn" title="New Chat (Ctrl+K)">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <div class="sidebar-label">CONVERSATIONS</div>
+  <div class="chat-list" id="chat-list">
+    <div class="chat-list-loading">
+      <div class="loader-dots sm"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+
+  <!-- User profile footer -->
+  <div class="sidebar-user" id="sidebar-user">
+    <img class="user-avatar" id="user-avatar" src="" alt="">
+    <div class="user-info">
+      <div class="user-name" id="user-name">Loading…</div>
+      <div class="user-email" id="user-email"></div>
+    </div>
+    <button class="icon-btn sm" id="settings-btn" title="Settings">
+      <svg viewBox="0 0 18 18" fill="none"><path d="M9 11a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" stroke-width="1.3"/><path d="M14.5 11.3l.8 1.3-1.5 1.5-1.3-.8c-.3.2-.7.3-1 .4l-.2 1.6H9.7l-.2-1.6c-.4-.1-.7-.3-1-.4l-1.3.8L5.7 12.6l.8-1.3c-.2-.3-.3-.6-.4-1L4.5 10V8.4l1.5-.2c.1-.4.3-.7.4-1l-.8-1.3 1.5-1.5 1.3.8c.3-.2.6-.3 1-.4L9.7 3h1.6l.2 1.5c.4.1.7.3 1 .4l1.3-.8 1.5 1.5-.8 1.3c.2.3.3.6.4 1l1.5.2v1.6l-1.5.2c-.1.4-.3.7-.4 1z" stroke="currentColor" stroke-width="1.3"/></svg>
+    </button>
+    <button class="icon-btn sm" id="logout-btn" title="Sign out">
+      <svg viewBox="0 0 18 18" fill="none"><path d="M11 3h3a1 1 0 011 1v10a1 1 0 01-1 1h-3M7 12l3-3-3-3M10 9H3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</aside>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main class="main" id="main">
+  <div class="topbar">
+    <button class="sidebar-toggle" id="sidebar-toggle">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="topbar-center" id="topbar-title">Axon</div>
+    <div class="topbar-right">
+      <div class="model-pill" id="model-pill">Axon 1</div>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="msgs-container" id="msgs-container">
+    <!-- Empty state -->
+    <div class="empty-state" id="empty-state">
+      <div class="empty-glow"></div>
+      <div class="empty-icon-box">
+        <svg viewBox="0 0 48 48" fill="none">
+          <polygon points="24,4 44,15 44,33 24,44 4,33 4,15" stroke="currentColor" stroke-width="1.2" opacity=".3"/>
+          <polygon points="24,10 38,18 38,30 24,38 10,30 10,18" fill="currentColor" opacity=".1"/>
+          <circle cx="24" cy="24" r="5" fill="currentColor" opacity=".7"/>
+          <line x1="24" y1="10" x2="24" y2="19" stroke="currentColor" stroke-width="1" opacity=".4"/>
+          <line x1="24" y1="29" x2="24" y2="38" stroke="currentColor" stroke-width="1" opacity=".4"/>
+          <line x1="10" y1="18" x2="19" y2="23" stroke="currentColor" stroke-width="1" opacity=".4"/>
+          <line x1="29" y1="25" x2="38" y2="30" stroke="currentColor" stroke-width="1" opacity=".4"/>
+          <line x1="38" y1="18" x2="29" y2="23" stroke="currentColor" stroke-width="1" opacity=".4"/>
+          <line x1="19" y1="25" x2="10" y2="30" stroke="currentColor" stroke-width="1" opacity=".4"/>
+        </svg>
+      </div>
+      <h2 class="empty-title">Axon is ready</h2>
+      <p class="empty-sub" id="empty-sub">Advanced AI with persistent memory. Ask anything.</p>
+      <div class="suggestions" id="suggestion-grid">
+        <button class="sug-card" data-p="Explain how attention mechanisms work in transformer models."><span>🧠</span><span>Explain transformers</span></button>
+        <button class="sug-card" data-p="Write an optimized Python function to find all prime numbers up to N using the Sieve of Eratosthenes."><span>🐍</span><span>Python prime sieve</span></button>
+        <button class="sug-card" data-p="What are the main differences between REST and GraphQL? When should I use each?"><span>🌐</span><span>REST vs GraphQL</span></button>
+        <button class="sug-card" data-p="Help me debug this: my async function returns a Promise object instead of the actual value."><span>🔍</span><span>Debug async issue</span></button>
+      </div>
+    </div>
+    <!-- Messages rendered here -->
+    <div class="msgs-list" id="msgs-list"></div>
+  </div>
+
+  <!-- Input -->
+  <div class="input-area">
+    <div class="input-toolbar">
+      <div class="tbar-left">
+        <button class="tbar-btn" id="think-btn" title="Enable extended thinking">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M8 2a4 4 0 014 4c0 1.5-.8 2.8-2 3.5V11H6v-1.5C4.8 8.8 4 7.5 4 6a4 4 0 014-4z" stroke="currentColor" stroke-width="1.2"/><path d="M6 13h4M7 15h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Think
+        </button>
+        <button class="tbar-btn" id="sys-btn" title="System prompt">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          System
+        </button>
+      </div>
+      <div class="tbar-right">
+        <span class="tbar-label">Temp</span>
+        <input type="range" id="temp-slider" min="0" max="1" step="0.05" value="0.7" class="temp-range">
+        <span id="temp-val" class="temp-val">0.7</span>
+      </div>
+    </div>
+    <div class="sys-wrap" id="sys-wrap">
+      <textarea id="sys-input" class="sys-input" rows="2"
+        placeholder="Extra instructions (optional) — Axon's identity always overrides this"></textarea>
+    </div>
+    <div class="input-box" id="input-box">
+      <textarea id="chat-input" rows="1" placeholder="Message Axon…" spellcheck="true"></textarea>
+      <div class="input-btns">
+        <button class="stop-btn" id="stop-btn" style="display:none">
+          <svg viewBox="0 0 16 16" fill="none"><rect x="3" y="3" width="10" height="10" rx="2" fill="currentColor"/></svg>
+        </button>
+        <button class="send-btn" id="send-btn" disabled>
+          <svg viewBox="0 0 16 16" fill="none"><path d="M14 8L2 3l2 5-2 5 12-5z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="input-footer">
+      <span class="input-hint">Enter · send &nbsp;|&nbsp; Shift+Enter · newline &nbsp;|&nbsp; Ctrl+K · new chat</span>
+      <span id="token-est" class="token-est">~0 tokens</span>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════════════ SETTINGS MODAL ═══════════════ -->
+<div class="modal-overlay" id="modal-overlay"></div>
+<div class="settings-modal" id="settings-modal">
+  <div class="modal-header">
+    <h3 class="modal-title">Settings</h3>
+    <button class="close-btn" id="close-settings">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="modal-tabs">
+    <button class="tab-btn active" data-tab="profile">Profile</button>
+    <button class="tab-btn" data-tab="memory">Memory</button>
+    <button class="tab-btn" data-tab="model">Model</button>
+    <button class="tab-btn" data-tab="appearance">Appearance</button>
+  </div>
+
+  <div class="modal-body">
+
+    <!-- ── Profile Tab ── -->
+    <div class="tab-pane active" id="tab-profile">
+      <div class="profile-card">
+        <img class="profile-avatar" id="profile-avatar" src="" alt="">
+        <div class="profile-info">
+          <div class="profile-name" id="profile-name"></div>
+          <div class="profile-email" id="profile-email"></div>
+          <div class="profile-since" id="profile-since"></div>
+        </div>
+      </div>
+      <div class="setting-sep"></div>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Sign out</div>
+          <div class="setting-hint">You'll be redirected to the login page</div>
+        </div>
+        <button class="danger-btn" id="settings-logout">Sign Out</button>
+      </div>
+      <div class="setting-sep"></div>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Delete all chats</div>
+          <div class="setting-hint">Permanently removes all conversations</div>
+        </div>
+        <button class="danger-btn" id="delete-all-chats">Delete All</button>
+      </div>
+    </div>
+
+    <!-- ── Memory Tab ── -->
+    <div class="tab-pane" id="tab-memory">
+      <div class="memory-header-row">
+        <div>
+          <div class="setting-label">Axon's Memory</div>
+          <div class="setting-hint">Facts Axon has learned about you from your conversations.</div>
+        </div>
+        <button class="danger-btn sm" id="clear-memory-btn">Clear All</button>
+      </div>
+      <div class="memory-list" id="memory-list">
+        <div class="memory-empty" id="memory-empty">
+          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.2" opacity=".3"/><path d="M10 16h12M16 10v12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".4"/></svg>
+          Axon hasn't learned anything about you yet.<br>Keep chatting and memories will appear here.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Model Tab ── -->
+    <div class="tab-pane" id="tab-model">
+      <div class="setting-group">
+        <div class="setting-label">Active Model</div>
+        <div class="model-cards" id="model-cards">
+          <div class="model-card active" data-model="axon-1">
+            <div class="model-card-top">
+              <span class="model-card-name">Axon 1</span>
+              <span class="model-card-badge">Recommended</span>
+            </div>
+            <div class="model-card-desc">Llama 3.3 70B · Best quality · 131K context</div>
+            <div class="model-card-note">Free · Great for reasoning, code, and writing</div>
+          </div>
+          <div class="model-card" data-model="axon-fast">
+            <div class="model-card-top">
+              <span class="model-card-name">Axon Fast</span>
+              <span class="model-card-badge speed">Fastest</span>
+            </div>
+            <div class="model-card-desc">Gemini 2.0 Flash · 1M context window</div>
+            <div class="model-card-note">Free · Best for long documents and speed</div>
+          </div>
+        </div>
+      </div>
+      <div class="setting-sep"></div>
+      <div class="setting-group">
+        <div class="setting-label">Temperature</div>
+        <div class="setting-hint">Controls randomness. Lower = more precise, Higher = more creative.</div>
+        <div class="temp-row">
+          <input type="range" id="settings-temp" min="0" max="1" step="0.05" value="0.7" class="temp-range wide">
+          <span class="temp-val" id="settings-temp-val">0.7</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Appearance Tab ── -->
+    <div class="tab-pane" id="tab-appearance">
+      <div class="setting-group">
+        <div class="setting-label">Theme</div>
+        <div class="theme-opts">
+          <button class="theme-btn active" data-theme="dark">Dark</button>
+          <button class="theme-btn" data-theme="light">Light</button>
+          <button class="theme-btn" data-theme="midnight">Midnight</button>
+        </div>
+      </div>
+      <div class="setting-sep"></div>
+      <div class="setting-group">
+        <div class="setting-label">Font Size</div>
+        <div class="fs-row">
+          <button class="fs-btn" data-d="-1">A−</button>
+          <span class="fs-val" id="fs-val">14px</span>
+          <button class="fs-btn" data-d="1">A+</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /modal-body -->
+</div><!-- /settings-modal -->
+
+<!-- External libs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<!-- Main app -->
+<script type="module" src="app.js"></script>
+</body>
+</html>
