@@ -1,0 +1,17 @@
+# Dependencies (not needed for static site)
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Database (if accidentally created)
+*.db
+*.sqlite
